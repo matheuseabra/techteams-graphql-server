@@ -2,7 +2,6 @@ const User = require("./models/User");
 const Project = require("./models/Project");
 const Task = require("./models/Task");
 const bcrypt = require('bcrypt');
-const authenticate = require('./middlewares/auth');
 
 module.exports = {
   Query: {
@@ -32,6 +31,7 @@ module.exports = {
     },
     project: async (_, { id }) => {
       try {
+        console.log(ctx.req.params);
         const project = await Project.findById(id);
         return project;
       } catch (err) {
