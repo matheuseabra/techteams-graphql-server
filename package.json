@@ -1,0 +1,30 @@
+{
+  "name": "techteams-graphql-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "ISC",
+  "repository": {
+    "type": "git"
+  },
+  "author": "Matheus Seabra",
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/server.js",
+    "start": "node src/server.js",
+    "build": "NODE_ENV=PRODUCTION babel src -d dist --copy-files"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "dotenv": "^7.0.0",
+    "graphql-yoga": "^1.17.4",
+    "jsonwebtoken": "^8.5.1",
+    "merge-graphql-schemas": "^1.5.8",
+    "mongoose": "^5.4.20"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.3",
+    "nodemon": "^1.18.10"
+  }
+}

@@ -1,0 +1,50 @@
+scalar Date
+
+type User {
+  id: ID!
+  username: String
+  password: String
+  email: String
+  isAdmin: Boolean
+  createdAt: Date
+  projects: [Project!]
+}
+
+type AuthPayload {
+  token: String!
+  user: User
+}
+
+type Project {
+  id: ID!
+  title: String!
+  description: String
+  tasks: [Task!]
+  createdAt: Date
+}
+
+type Task {
+  id: ID!
+  title: String!
+  completed: Boolean!
+  project: Project!
+}
+
+type Query {
+  users: [User!]!
+  user(id: ID!): User
+  projects: [Project!]!
+  project(id: ID!): Project
+  tasks: [Task!]!
+  task: Task!
+}
+
+type Mutation {
+  register(username: String!, email: String!, password: String!): AuthPayload
+  login(username: String!, password: String!): AuthPayload
+  createProject(title: String!, description: String!): Project
+  updateProject(id: ID!, title: String, description: String): Project
+  deleteProject(id: ID!): Project
+  createTask(title: String!, completed: Boolean): Task
+  deleteTask(id: ID!): Task
+}
