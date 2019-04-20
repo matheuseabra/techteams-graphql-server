@@ -1,6 +1,8 @@
 const { GraphQLServer } = require("graphql-yoga");
+const express = require('express');
 const path = require("path");
 const resolvers = require('./resolvers');
+const cors = require('cors');
 const PORT = process.env.PORT || 9000;
 require('./config/database');
 require('dotenv').config();
@@ -14,6 +16,9 @@ const server = new GraphQLServer({
   context
 });
 
+server.express.use(cors());
+server.express.use(express.json());
+
 const options = {
   port: PORT,
   cors: {
@@ -22,7 +27,7 @@ const options = {
   },
   endpoint: '/graphql',
   subscriptions: '/subscriptions',
-  playground: '/playground',
+  playground: '/playground'
 }
 
 server.start(options, ({port}) => console.log(`Server is running on localhost:${port}`));
