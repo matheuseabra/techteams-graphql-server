@@ -7,5 +7,3 @@ mongoose.set('useFindAndModify', false);
 mongoose.connect(DB_PROD, {
   useNewUrlParser: true
 });
-
-export default mongoose;
