@@ -5,51 +5,51 @@ const bcrypt = require('bcryptjs');
 
 module.exports = {
   Query: {
-    users: async () => {
+    users: async (req, res) => {
       try {
         const users = await User.find().sort('-createdAt');
-        return users;
+        return res.json({ users });
       } catch (err) {
         throw new Error(err);
       }  
     },
-    user: async (_, { id }) => {
+    user: async (_, { id }, req, res) => {
       try {
         const user = await User.findById(id);
-        return user;
+        return res.json({ user });
       } catch (err) {
         throw new Error(err);
       }
     },
-    projects: async () => {
+    projects: async (req, res) => {
       try {   
         const projects = await Project.find().sort('-createdAt');
-        return projects;
+        return res.json({ projects });
       } catch (err) {
         throw new Error(err);
       }
     },
-    project: async (_, { id }) => {
+    project: async (_, { id }, req, res) => {
       try {
         console.log(ctx.req.params);
         const project = await Project.findById(id);
-        return project;
+        return res.json({ project });
       } catch (err) {
         throw new Error(err);
       }
     },
-    tasks: async () => {
+    tasks: async (req, res) => {
       try {
         const tasks = await Task.find().sort('-createdAt');
-        return tasks;
+        return res.json({ tasks });
       } catch (err) {
         throw new Error(err);
       }
     },
-    task: (_, { id }) => {
+    task: (_, { id }, req, res) => {
         try {
           const task = Task.findById(id);
-          return task;
+          return res.json({ task });
         } catch (err) {
           throw new Error(err);
         }   
@@ -57,7 +57,7 @@ module.exports = {
   },
 
   Mutation: {
-    register: async (_, { username, password, email }) => {
+    register: async (_, { username, password, email }, req, res) => {
       try {
         let user = await User.findOne({ email }).lean();
         if (user) {
@@ -65,17 +65,14 @@ module.exports = {
         }
         const _password = await bcrypt.hash(password, 10);     
         const newUser = await User.create({ username, password: _password, email }).save();
-        const token = jwt.sign({ userId: user._id }, 'secretKey1324');
+        const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
 
-        return {
-          newUser,
-          token
-        }
+        return res.json({ newUser, token });
       } catch (err) {
         throw new Error(err);
       }
     },
-    login: async (_, { username, password }) => {
+    login: async (_, { username, password }, req, res) => {
       try {
         const user = await User.findOne({ username }).lean();
         if (!user) {
@@ -88,50 +85,47 @@ module.exports = {
         user.password = undefined;
         const token = jwt.sign({ userId: user._id }, 'secretKey1324');
 
-        return {
-          user,
-          token
-        }
+        return res.json({ User, token });
       } catch (err) {
         throw new Error(err);
       }
     },
-    createProject: async (_, { title, description }) => {
+    createProject: async (_, { title, description }, req, res) => {
       try {
         const newProject = await Project.create({ title, description });
         await newProject.save();
-        return newProject;
+        return res.json({ newProject });
       } catch (err) {
         throw new Error(err);
       }
     },
-    updateProject: async (_, { id, title, description }) => {
+    updateProject: async (_, { id, title, description }, req, res) => {
       try {
         const project = await Project.findOneAndUpdate(id, {  title, description });
         await project.save();
-        return project;
+        return res.json({ project });
       } catch (err) {
         throw new Error(err);
       }
     },
-    deleteProject: async (_, { id }) => {
+    deleteProject: async (_, { id }, req, res) => {
       try {
         await Project.findByIdAndDelete(id);
       } catch (err) {
         throw new Error(err);
       }
     },
-    createTask: async (_, { title, completed }) => {
+    createTask: async (_, { title, completed }, req, res) => {
       try {
 
         const newTask = await Task.create({ title, completed });
         await newTask.save();
-        return newTask;
+        return res.json({ newTask });
       } catch (err) {
         throw new Error(err);
       }
     },
-    deleteTask: async(_, { id }) => {
+    deleteTask: async(_, { id }, req, res) => {
       try {
         await Task.findByIdAndDelete(id);
       } catch (err) {
