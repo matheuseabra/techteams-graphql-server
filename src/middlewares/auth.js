@@ -6,6 +6,6 @@ module.exports = (ctx) => {
         throw new Error('Not authorized');
     }
     const token = Authorization.replace('Bearer ', '');
-    const { userId } = jwt.verify(token, 'secretKey1324');
+    const { userId } = jwt.verify(token, process.env.SECRET_KEY);
     return userId;
 }

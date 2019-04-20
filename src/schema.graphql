@@ -48,3 +48,8 @@ type Mutation {
   createTask(title: String!, completed: Boolean): Task
   deleteTask(id: ID!): Task
 }
+
+type Schema {
+  query: Query
+  mutation: Mutation
+}
