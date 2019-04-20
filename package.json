@@ -9,7 +9,7 @@
   "author": "Matheus Seabra",
   "scripts": {
     "dev": "nodemon --exec babel-node src/server.js",
-    "start": "node src/server.js",
+    "start": "node server.js",
     "build": "NODE_ENV=PRODUCTION babel src -d dist --copy-files"
   },
   "dependencies": {
