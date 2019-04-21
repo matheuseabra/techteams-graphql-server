@@ -21,13 +21,12 @@ server.express.use(express.json());
 
 const options = {
   port: PORT,
+  endpoint: '/graphql',
+  playground: false,
   cors: {
     credentials: true,
     origin: ['http://localhost:3000'] // frontend url
-  },
-  endpoint: '/graphql',
-  subscriptions: '/subscriptions',
-  playground: '/playground'
+  }
 }
 
 server.start(options, ({port}) => console.log(`Server is running on localhost:${port}`));

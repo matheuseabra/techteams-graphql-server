@@ -26,7 +26,8 @@ module.exports = {
     projects: async () => {
       try {   
         const projects = await Project.find().sort('-createdAt');
-        return projects;
+        console.log(projects);
+        return projects;       
       } catch (err) {
         throw new Error(err);
       }
@@ -41,7 +42,8 @@ module.exports = {
     },
     tasks: async () => {
       try {
-        const tasks = await Task.find().sort('-createdAt');
+        let tasks = await Task.find().sort('-createdAt');
+        console.log(tasks);
         return tasks;
       } catch (err) {
         throw new Error(err);
@@ -68,6 +70,7 @@ module.exports = {
         const newUser = await User.create({ username, password, email });
         await newUser.save();
         // const token = jwt.sign({ userId: newUser._id }, SECRET_KEY);
+        console.log(typeof newUser);
         return newUser;
       } catch (err) {
         throw new Error(err);
@@ -94,10 +97,11 @@ module.exports = {
         throw new Error(err);
       }
     },
-    createProject: async (_, { title, description }) => {
+    createProject: async (_, { title, description }, { req }) => {
       try {
         const newProject = await Project.create({ title, description });
         await newProject.save();
+        console.log(typeof newProject);
         return newProject;
       } catch (err) {
         throw new Error(err);
@@ -123,6 +127,7 @@ module.exports = {
       try {
         const newTask = await Task.create({ title, completed });
         await newTask.save();
+        console.log(newTask);
         return newTask;
       } catch (err) {
         throw new Error(err);
