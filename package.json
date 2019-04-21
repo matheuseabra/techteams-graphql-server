@@ -19,7 +19,6 @@
     "graphql": "^14.2.1",
     "graphql-yoga": "^1.17.4",
     "jsonwebtoken": "^8.5.1",
-    "merge-graphql-schemas": "^1.5.8",
     "mongoose": "^5.4.20"
   },
   "devDependencies": {

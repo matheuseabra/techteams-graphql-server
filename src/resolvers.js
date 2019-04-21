@@ -24,9 +24,8 @@ module.exports = {
       }
     },
     projects: async () => {
-      try {   
+      try { 
         const projects = await Project.find().sort('-createdAt');
-        console.log(projects);
         return projects;       
       } catch (err) {
         throw new Error(err);
@@ -97,11 +96,10 @@ module.exports = {
         throw new Error(err);
       }
     },
-    createProject: async (_, { title, description }, { req }) => {
+    createProject: async (_, { title, description }) => {
       try {
         const newProject = await Project.create({ title, description });
         await newProject.save();
-        console.log(typeof newProject);
         return newProject;
       } catch (err) {
         throw new Error(err);
