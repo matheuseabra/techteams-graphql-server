@@ -22,7 +22,7 @@ server.express.use(express.json());
 const options = {
   port: PORT,
   endpoint: '/graphql',
-  playground: false,
+  playground: '/playground',
   cors: {
     credentials: true,
     origin: ['http://localhost:3000'] // frontend url
