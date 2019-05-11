@@ -27,6 +27,7 @@ type Task {
   id: ID!
   title: String!
   completed: Boolean!
+  assignee: User
   project: Project!
 }
 
@@ -36,6 +37,7 @@ type Query {
   projects: [Project!]!
   project(id: ID!): Project
   tasks: [Task!]!
+  pendingTasks: [Task!]
   task: Task!
 }
 
@@ -46,6 +48,7 @@ type Mutation {
   updateProject(id: ID!, title: String, description: String): Project
   deleteProject(id: ID!): Project
   createTask(title: String!, completed: Boolean): Task
+  updateTask(id: ID!, title: String!, completed: Boolean!): Task
   deleteTask(id: ID!): Task
 }
 
